@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head'); %>
+  </head>
+  <body>
+    <!-- <% if (user) { %>
+	<p>Hello <%= user.username %></p>
+<% } %> -->
+    <header>
+      <div><%- include('../partials/banner'); %></div>
+      <%- include('../partials/header'); %>
+    </header>
+    <!-- This example requires Tailwind CSS v2.0+ -->
+    <div
+      x-data="{ open: true }"
+      @keydown.window.escape="open = false"
+      x-init='$watch("open", o => !o &amp;&amp; window.setTimeout(() => (open = true), 1000))'
+      x-show="open"
+      class="relative z-10"
+      aria-labelledby="modal-title"
+      x-ref="dialog"
+      aria-modal="true"
+    >
+      <!--
+    Background backdrop, show/hide based on modal state.
+
+    Entering: "ease-out duration-300"
+      From: "opacity-0"
+      To: "opacity-100"
+    Leaving: "ease-in duration-200"
+      From: "opacity-100"
+      To: "opacity-0"
+  -->
+      <div
+        x-show="open"
+        x-transition:enter="ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="ease-in duration-200"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        x-description="Background backdrop, show/hide based on modal state."
+        class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+      ></div>
+      <div class="fixed inset-0 z-10 overflow-y-auto">
+        <div
+          class="flex min-h-screen items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0"
+        >
+          <!-- This element is to trick the browser into centering the modal contents. -->
+          <span
+            class="hidden sm:inline-block sm:h-screen sm:align-middle"
+            aria-hidden="true"
+            >&#8203;</span
+          >
+
+          <!--
+        Modal panel, show/hide based on modal state.
+
+        Entering: "ease-out duration-300"
+          From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+          To: "opacity-100 translate-y-0 sm:scale-100"
+        Leaving: "ease-in duration-200"
+          From: "opacity-100 translate-y-0 sm:scale-100"
+          To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+      -->
+          <div
+            x-show="open"
+            x-transition:enter="ease-out duration-300"
+            x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+            x-transition:leave="ease-in duration-200"
+            x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+            x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            x-description="Modal panel, show/hide based on modal state."
+            class="relative inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+            @click.away="open = false"
+          >
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+              <div class="sm:flex sm:items-start">
+                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                  <h3
+                    class="text-lg font-medium leading-6 text-gray-900"
+                    id="modal-title"
+                  >
+                    Share
+                  </h3>
+                  <div class="mt-2">
+                    <div
+                      class="flex flex-row justify-start flex-wrap h-28 overflow-hidden"
+                    >
+                      <!-- Controls -->
+                      <div
+                        class="absolute left-7 z-10 m-auto my-6 rounded-full bg-white p-2 opacity-90 shadow-xl"
+                        @click="prevItems()"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-6 w-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M15 19l-7-7 7-7"
+                          />
+                        </svg>
+                      </div>
+                      <!-- Controls -->
+                      <div
+                        class="flex flex-col items-center justify-center rounded p-2 hover:bg-gray-100"
+                        id="shareItem"
+                      >
+                        <div class="h-16 w-16 rounded-full">
+                          <svg
+                            viewBox="0 0 60 60"
+                            preserveAspectRatio="xMidYMid meet"
+                            focusable="false"
+                            class="style-scope yt-icon"
+                            style="pointer-events: none; display: block; width: 100%; height: 100%;"
+                          >
+                            <g class="style-scope yt-icon">
+                              <g
+                                fill="none"
+                                fill-rule="evenodd"
+                                class="style-scope yt-icon"
+                              >
+                                <path
+                                  d="M28.4863253 59.9692983c-6.6364044-.569063-11.5630204-2.3269561-16.3219736-5.8239327C4.44376366 48.4721168 3e-7 39.6467924 3e-7 29.9869344c0-14.8753747 10.506778-27.18854591 25.2744118-29.61975392 6.0281072-.9924119 12.7038532.04926445 18.2879399 2.85362966C57.1386273 10.0389054 63.3436516 25.7618627 58.2050229 40.3239688 54.677067 50.3216743 45.4153135 57.9417536 34.81395 59.5689067c-2.0856252.3201125-5.0651487.5086456-6.3276247.4003916z"
+                                  fill="#3B5998"
+                                  fill-rule="nonzero"
+                                  class="style-scope yt-icon"
+                                ></path>
+                                <path
+                                  d="M25.7305108 45h5.4583577V30.0073333h4.0947673l.8098295-4.6846666h-4.9045968V21.928c0-1.0943333.7076019-2.2433333 1.7188899-2.2433333h2.7874519V15h-3.4161354v.021c-5.3451414.194-6.4433395 3.2896667-6.5385744 6.5413333h-.0099897v3.7603334H23v4.6846666h2.7305108V45z"
+                                  fill="#FFF"
+                                  class="style-scope yt-icon"
+                                ></path>
+                              </g>
+                            </g>
+                          </svg>
+                        </div>
+                        <p class="mt-2 text-center">Facebook</p>
+                      </div>
+
+                      <div
+                        class="flex flex-col items-center justify-center rounded p-2 hover:bg-gray-100"
+                        id="shareItem"
+                      >
+                        <div class="h-16 w-16 rounded-full">
+                          <svg
+                            viewBox="0 0 60 60"
+                            preserveAspectRatio="xMidYMid meet"
+                            focusable="false"
+                            class="style-scope yt-icon"
+                            style="pointer-events: none; display: block; width: 100%; height: 100%;"
+                          >
+                            <g class="style-scope yt-icon">
+                              <g
+                                fill="none"
+                                fill-rule="evenodd"
+                                class="style-scope yt-icon"
+                              >
+                                <path
+                                  d="M28.486325 59.969298c-6.636404-.569063-11.56302-2.326956-16.321973-5.823932C4.443764 48.472116 0 39.646792 0 29.986934 0 15.11156 10.506778 2.798388 25.274412.36718c6.028107-.992411 12.703853.049265 18.28794 2.85363 13.576275 6.818095 19.7813 22.541053 14.64267 37.103159-3.527955 9.997705-12.789708 17.617785-23.391072 19.244938-2.085625.320112-5.065149.508645-6.327625.400391z"
+                                  fill="#1DA1F2"
+                                  fill-rule="nonzero"
+                                  class="style-scope yt-icon"
+                                ></path>
+                                <path
+                                  d="M45.089067 17.577067c-.929778.595555-3.064534 1.460977-4.117334 1.460977v.001778C39.7696 17.784 38.077156 17 36.200178 17c-3.645511 0-6.6016 2.956089-6.6016 6.600178 0 .50631.058666 1.000178.16711 1.473778h-.001066c-4.945066-.129778-10.353422-2.608356-13.609244-6.85049-2.001778 3.46489-.269511 7.3184 2.002133 8.72249-.7776.058666-2.209067-.0896-2.882844-.747023-.045156 2.299734 1.060622 5.346845 5.092622 6.452267-.776533.417778-2.151111.297956-2.7488.209067.209778 1.941333 2.928355 4.479289 5.901155 4.479289C22.46009 38.565156 18.4736 40.788089 14 40.080889 17.038222 41.929422 20.5792 43 24.327111 43c10.650667 0 18.921956-8.631822 18.4768-19.280356-.001778-.011733-.001778-.023466-.002844-.036266.001066-.027378.002844-.054756.002844-.0832 0-.033067-.002844-.064356-.003911-.096356.9696-.66311 2.270578-1.836089 3.2-3.37991-.539022.296888-2.156089.891377-3.6608 1.038932.965689-.521244 2.396444-2.228266 2.749867-3.585777"
+                                  fill="#FFF"
+                                  class="style-scope yt-icon"
+                                ></path>
+                              </g>
+                            </g>
+                          </svg>
+                        </div>
+                        <p class="mt-2 text-center">Twitter</p>
+                      </div>
+
+                      <div
+                        class="flex flex-col items-center justify-center rounded p-2 hover:bg-gray-100"
+                        id="shareItem"
+                      >
+                        <div class="h-16 w-16 rounded-full">
+                          <svg
+                            viewBox="0 0 128 128"
+                            width="256"
+                            height="256"
+                            preserveAspectRatio="xMidYMid meet"
+                            focusable="false"
+                            class="style-scope yt-icon"
+                            style="pointer-events: none; display: block; width: 100%; height: 100%;"
+                          >
+                            <defs>
+                              <clipPath id="b">
+                                <circle
+                                  cx="64"
+                                  cy="64"
+                                  r="64"
+                                  fill="none"
+                                ></circle>
+                              </clipPath>
+                              <clipPath id="c">
+                                <path
+                                  fill="none"
+                                  d="M104-163H24A24.07,24.07,0,0,0,0-139v80A24.07,24.07,0,0,0,24-35h80a24.07,24.07,0,0,0,24-24v-80A24.07,24.07,0,0,0,104-163ZM120-59a16,16,0,0,1-16,16H24A16,16,0,0,1,8-59v-80a16,16,0,0,1,16-16h80a16,16,0,0,1,16,16Z"
+                                ></path>
+                              </clipPath>
+                              <clipPath id="e">
+                                <circle
+                                  cx="82"
+                                  cy="209"
+                                  r="5"
+                                  fill="none"
+                                ></circle>
+                              </clipPath>
+                              <clipPath id="g">
+                                <path
+                                  fill="none"
+                                  d="M64-115A16,16,0,0,0,48-99,16,16,0,0,0,64-83,16,16,0,0,0,80-99,16,16,0,0,0,64-115Zm0,24a8,8,0,0,1-8-8,8,8,0,0,1,8-8,8,8,0,0,1,8,8A8,8,0,0,1,64-91Z"
+                                ></path>
+                              </clipPath>
+                              <clipPath id="h">
+                                <path
+                                  fill="none"
+                                  d="M84-63H44A16,16,0,0,1,28-79v-40a16,16,0,0,1,16-16H84a16,16,0,0,1,16,16v40A16,16,0,0,1,84-63ZM44-127a8,8,0,0,0-8,8v40a8,8,0,0,0,8,8H84a8,8,0,0,0,8-8v-40a8,8,0,0,0-8-8Z"
+                                ></path>
+                              </clipPath>
+                              <clipPath id="i">
+                                <circle
+                                  cx="82"
+                                  cy="-117"
+                                  r="5"
+                                  fill="none"
+                                ></circle>
+                              </clipPath>
+                              <radialGradient
+                                id="a"
+                                cx="27.5"
+                                cy="121.5"
+                                r="137.5"
+                                gradientUnits="userSpaceOnUse"
+                              >
+                                <stop
+                                  offset="0"
+                                  stop-color="#ffd676"
+                                  class="stopColorffd676 svgShape"
+                                ></stop>
+                                <stop
+                                  offset=".25"
+                                  stop-color="#f2a454"
+                                  class="stopColorf2a454 svgShape"
+                                ></stop>
+                                <stop
+                                  offset=".38"
+                                  stop-color="#f05c3c"
+                                  class="stopColorf05c3c svgShape"
+                                ></stop>
+                                <stop
+                                  offset=".7"
+                                  stop-color="#c22f86"
+                                  class="stopColorc22f86 svgShape"
+                                ></stop>
+                                <stop
+                                  offset=".96"
+                                  stop-color="#6666ad"
+                                  class="stopColor6666ad svgShape"
+                                ></stop>
+                                <stop
+                                  offset=".99"
+                                  stop-color="#5c6cb2"
+                                  class="stopColor5c6cb2 svgShape"
+                                ></stop>
+                              </radialGradient>
+                              <radialGradient
+                                id="d"
+                                cx="27.5"
+                                cy="-41.5"
+                                r="148.5"
+                                xlink:href="#a"
+                              ></radialGradient>
+                              <radialGradient
+                                id="f"
+                                cx="13.87"
+                                cy="303.38"
+                                r="185.63"
+                                xlink:href="#a"
+                              ></radialGradient>
+                              <radialGradient
+                                id="j"
+                                cx="13.87"
+                                cy="-22.62"
+                                r="185.63"
+                                xlink:href="#a"
+                              ></radialGradient>
+                            </defs>
+                            <g
+                              clip-path="url(#b)"
+                              fill="#000000"
+                              class="color000 svgShape"
+                            >
+                              <circle
+                                cx="27.5"
+                                cy="121.5"
+                                r="137.5"
+                                fill="url(#a)"
+                              ></circle>
+                            </g>
+                            <g
+                              clip-path="url(#c)"
+                              fill="#000000"
+                              class="color000 svgShape"
+                            >
+                              <circle
+                                cx="27.5"
+                                cy="-41.5"
+                                r="148.5"
+                                fill="url(#d)"
+                              ></circle>
+                            </g>
+                            <g
+                              clip-path="url(#e)"
+                              fill="#000000"
+                              class="color000 svgShape"
+                            >
+                              <circle
+                                cx="13.87"
+                                cy="303.38"
+                                r="185.63"
+                                fill="url(#f)"
+                              ></circle>
+                            </g>
+                            <g
+                              clip-path="url(#g)"
+                              fill="#000000"
+                              class="color000 svgShape"
+                            >
+                              <circle
+                                cx="27.5"
+                                cy="-41.5"
+                                r="148.5"
+                                fill="url(#d)"
+                              ></circle>
+                            </g>
+                            <g
+                              clip-path="url(#h)"
+                              fill="#000000"
+                              class="color000 svgShape"
+                            >
+                              <circle
+                                cx="27.5"
+                                cy="-41.5"
+                                r="148.5"
+                                fill="url(#d)"
+                              ></circle>
+                            </g>
+                            <g
+                              clip-path="url(#i)"
+                              fill="#000000"
+                              class="color000 svgShape"
+                            >
+                              <circle
+                                cx="13.87"
+                                cy="-22.62"
+                                r="185.63"
+                                fill="url(#j)"
+                              ></circle>
+                            </g>
+                            <circle
+                              cx="82"
+                              cy="46"
+                              r="5"
+                              fill="#ffffff"
+                              class="colorfff svgShape"
+                            ></circle>
+                            <path
+                              fill="#ffffff"
+                              d="M64,48A16,16,0,1,0,80,64,16,16,0,0,0,64,48Zm0,24a8,8,0,1,1,8-8A8,8,0,0,1,64,72Z"
+                              class="colorfff svgShape"
+                            ></path>
+                            <rect
+                              width="64"
+                              height="64"
+                              x="32"
+                              y="32"
+                              fill="none"
+                              stroke="#fff"
+                              stroke-miterlimit="10"
+                              stroke-width="8"
+                              rx="12"
+                              ry="12"
+                              class="colorStrokefff svgStroke"
+                            ></rect>
+                          </svg>
+                        </div>
+                        <p class="mt-2 text-center">Instagram</p>
+                      </div>
+                      <div
+                        class="flex flex-col items-center justify-center rounded p-2 hover:bg-gray-100"
+                        id="shareItem"
+                      >
+                        <div class="h-16 w-16 rounded-full">
+                          <svg
+                            viewBox="0 0 60 60"
+                            preserveAspectRatio="xMidYMid meet"
+                            focusable="false"
+                            class="style-scope yt-icon"
+                            style="pointer-events: none; display: block; width: 100%; height: 100%;"
+                          >
+                            <g class="style-scope yt-icon">
+                              <g
+                                fill="none"
+                                fill-rule="evenodd"
+                                class="style-scope yt-icon"
+                              >
+                                <circle
+                                  cx="30"
+                                  cy="30"
+                                  r="30"
+                                  fill="#25D366"
+                                  class="style-scope yt-icon"
+                                ></circle>
+                                <path
+                                  d="M39.7746 19.3513C37.0512 16.5467 33.42 15 29.5578 15C21.6022 15 15.1155 21.6629 15.1155 29.8725C15.1155 32.4901 15.7758 35.0567 17.0467 37.3003L15 45L22.6585 42.9263C24.7712 44.1161 27.148 44.728 29.5578 44.728C37.5134 44.728 44 38.0652 44 29.8555C44 25.8952 42.498 22.1558 39.7746 19.3513ZM29.5578 42.2295C27.3956 42.2295 25.2829 41.6346 23.4508 40.5127L23.0051 40.2408L18.4661 41.4646L19.671 36.9093L19.3904 36.4334C18.1855 34.4618 17.5583 32.1841 17.5583 29.8555C17.5583 23.0397 22.9556 17.4986 29.5743 17.4986C32.7763 17.4986 35.7968 18.7904 38.0581 21.119C40.3193 23.4476 41.5737 26.5581 41.5737 29.8555C41.5572 36.6884 36.1764 42.2295 29.5578 42.2295ZM36.1434 32.966C35.7803 32.779 34.0142 31.8782 33.6841 31.7592C33.354 31.6402 33.1064 31.5722 32.8754 31.9462C32.6278 32.3201 31.9511 33.153 31.7365 33.4079C31.5219 33.6629 31.3238 33.6799 30.9607 33.4929C30.5976 33.306 29.4422 32.915 28.0558 31.6572C26.9829 30.6714 26.2567 29.4476 26.0421 29.0907C25.8275 28.7167 26.0256 28.5127 26.2072 28.3258C26.3722 28.1558 26.5703 27.8839 26.7518 27.6799C26.9334 27.4589 26.9994 27.3059 27.115 27.068C27.2305 26.813 27.181 26.6091 27.082 26.4221C26.9994 26.2351 26.2732 24.3994 25.9761 23.6686C25.679 22.9377 25.3819 23.0397 25.1673 23.0227C24.9528 23.0057 24.7217 23.0057 24.4741 23.0057C24.2265 23.0057 23.8469 23.0907 23.5168 23.4646C23.1867 23.8385 22.2459 24.7394 22.2459 26.5581C22.2459 28.3938 23.5333 30.1445 23.7149 30.3994C23.8964 30.6544 26.2567 34.3938 29.8714 36.0085C30.7297 36.3994 31.4064 36.6204 31.9345 36.7904C32.7928 37.0793 33.5851 37.0283 34.2123 36.9433C34.9055 36.8414 36.3415 36.0425 36.6551 35.1756C36.9522 34.3088 36.9522 33.5609 36.8697 33.4079C36.7541 33.255 36.5065 33.153 36.1434 32.966Z"
+                                  fill="white"
+                                  class="style-scope yt-icon"
+                                ></path>
+                              </g>
+                            </g>
+                          </svg>
+                        </div>
+                        <p class="mt-2 text-center">Whatsapp</p>
+                      </div>
+                      <div
+                        class="flex flex-col items-center justify-center rounded p-2 hover:bg-gray-100"
+                        id="shareItem"
+                      >
+                        <div class="h-16 w-16 rounded-full">
+                          <svg
+                            viewBox="0 0 60 60"
+                            preserveAspectRatio="xMidYMid meet"
+                            focusable="false"
+                            class="style-scope yt-icon"
+                            style="pointer-events: none; display: block; width: 100%; height: 100%;"
+                          >
+                            <g class="style-scope yt-icon">
+                              <g
+                                fill="none"
+                                fill-rule="evenodd"
+                                class="style-scope yt-icon"
+                              >
+                                <path
+                                  d="M28.4863253 59.9692983c-6.6364044-.569063-11.5630204-2.3269561-16.3219736-5.8239327C4.44376366 48.4721168 3e-7 39.6467924 3e-7 29.9869344c0-14.8753747 10.506778-27.18854591 25.2744118-29.61975392 6.0281072-.9924119 12.7038532.04926445 18.2879399 2.85362966C57.1386273 10.0389054 63.3436516 25.7618627 58.2050229 40.3239688 54.677067 50.3216743 45.4153135 57.9417536 34.81395 59.5689067c-2.0856252.3201125-5.0651487.5086456-6.3276247.4003916z"
+                                  fill="#0077B5"
+                                  fill-rule="nonzero"
+                                  class="style-scope yt-icon"
+                                ></path>
+                                <g fill="#FFF" class="style-scope yt-icon">
+                                  <path
+                                    d="M17.88024691 22.0816337c2.14182716 0 3.87817284-1.58346229 3.87817284-3.53891365C21.75841975 16.58553851 20.02207407 15 17.88024691 15 15.73634568 15 14 16.58553851 14 18.54272005c0 1.95545136 1.73634568 3.53891365 3.88024691 3.53891365M14.88888889 44.8468474h6.95851852V24.77777778h-6.95851852zM31.6137778 33.6848316c0-2.3014877 1.0888889-4.552108 3.6925432-4.552108 2.6036543 0 3.2438518 2.2506203 3.2438518 4.4970883v10.960701h6.9274074V33.1816948c0-7.9263084-4.6853333-9.29280591-7.5676049-9.29280591-2.8798518 0-4.4682469.9740923-6.2961975 3.33440621v-2.70185178h-6.9471111V44.5905129h6.9471111V33.6848316z"
+                                    class="style-scope yt-icon"
+                                  ></path>
+                                </g>
+                              </g>
+                            </g>
+                          </svg>
+                        </div>
+                        <p class="mt-2 text-center">LinkedIn</p>
+                      </div>
+                      <div
+                        class="flex flex-col items-center justify-center rounded p-2 hover:bg-gray-100"
+                        id="shareItem"
+                      >
+                        <div class="h-16 w-16 rounded-full">
+                          <svg
+                            viewBox="0 0 128 128"
+                            width="256"
+                            height="256"
+                            preserveAspectRatio="xMidYMid meet"
+                            focusable="false"
+                            class="style-scope yt-icon"
+                            style="pointer-events: none; display: block; width: 100%; height: 100%;"
+                          >
+                            <circle
+                              cx="64"
+                              cy="64"
+                              r="64"
+                              fill="#e21a20"
+                              class="colore21a20 svgShape"
+                            ></circle>
+                            <path
+                              fill="#ffffff"
+                              fill-rule="evenodd"
+                              d="M98.62,53.92c-.49-6.75-1.72-13.72-10.35-14.23a426.5,426.5,0,0,0-48.55,0c-8.63.5-9.86,7.48-10.35,14.23a135,135,0,0,0,0,20.16c.49,6.75,1.72,13.72,10.35,14.23a426.5,426.5,0,0,0,48.55,0c8.63-.5,9.86-7.48,10.35-14.23A135,135,0,0,0,98.62,53.92ZM57,73V53L76,63Z"
+                              class="colorfff svgShape"
+                            ></path>
+                          </svg>
+                        </div>
+                        <p class="mt-2 text-center">Youtube</p>
+                      </div>
+                      <!-- Controls -->
+                      <div
+                        class="absolute right-7 z-10 m-auto my-6 rounded-full bg-white p-2 opacity-90 shadow-xl"
+                        @click="nextItems()"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-6 w-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
+                      </div>
+                      <!-- Controls -->
+                    </div>
+                    <div
+                      class="mt-2 flex items-center justify-between rounded border bg-gray-100 p-2"
+                    >
+                      <input
+                        id="share-url"
+                        dir="ltr"
+                        readonly
+                        class="px-2 bg-transparent rounded-lg px-1 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        value="https://google.com"
+                        size="45"
+                      />
+                      <button
+                        class="ml-2 rounded-full p-1 font-semibold text-indigo-500 focus:outline-dotted transition-all"
+						  
+x-data="{copied: '0'}"
+x-text="copied === '0' ? 'Copy' : 'Copied!'"	  @click="navigator.clipboard.writeText(document.getElementById('share-url').value); copied = '1'; setTimeout(function() {copied = '0'}, 3500)"
+                      >
+                        Copy
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6"
+            >
+              <button
+                type="button"
+                class="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                @click="open = false"
+              >
+                Ok
+              </button>
+              <button
+                type="button"
+                class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                @click="open = false"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+		document.querySelectorAllExcept = function(id, except) {
+			var els = [...document.querySelectorAll('#' + id)]
+			for (let el of els) {
+				if (except.includes(el)) els.pop(el);
+			}
+			return els;
+		}
+		
+		function detectWrap(childrenID) {
+        var wrappedItems = [];
+        var prevItem = {};
+        var currItem = {};
+        var items = document.querySelectorAll("#" + childrenID);
+
+        for (var i = 0; i < items.length; i++) {
+          currItem = items[i].getBoundingClientRect();
+          if (prevItem && prevItem.top < currItem.top) {
+            wrappedItems.push(items[i]);
+          }
+          prevItem = currItem;
+        }
+
+        return wrappedItems;
+      };
+
+		function prevItems() {
+			var items = detectWrap("shareItem");
+			var curItems = document.querySelectorAllExcept('shareItem', items)
+			curItems.forEach(curItem => {
+				curItem.classList.remove('hidden')
+			})
+		}
+		
+		function nextItems() {
+			var items = detectWrap("shareItem");
+			var curItems = document.querySelectorAllExcept('shareItem', items)
+			curItems.forEach(curItem => {
+				curItem.classList.add('hidden')
+			})
+		}
+    </script>
+
+    <footer><%- include('../partials/footer'); %></footer>
+  </body>
+</html>
